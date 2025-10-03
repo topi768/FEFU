@@ -3,10 +3,10 @@ import sympy as sp
 import matplotlib.pyplot as plt
 from sympy.codegen.rewriting import optimize
 from scipy import optimize
+from table import table
 
-# ------------------------
-# Настройки и функция
-# ------------------------
+i = 0
+
 x_sym = sp.symbols('x')
 
 a = 0.4
@@ -15,10 +15,9 @@ x_star = 0.52
 count_points = 11
 
 # f_expr можно менять в одном месте
-f_expr = x_sym**2 + sp.log(x_sym)
 # f_expr = x_sym**2 - sp.log(x_sym + 2, 10)
 # f_expr = x_sym**2 - sp.log(x_sym, 10)
-# f_expr = x_sym**3 - sp.sin(x_sym)
+f_expr = x_sym**3 - sp.sin(x_sym)
 
 # ------------------------
 # Часть 1: определяем f
@@ -161,7 +160,7 @@ min_val_R_2_num = sp.N(R_2min_val, 30)
 max_val_R_2_num = sp.N(R_2max_val, 30)
 R_2_star_num = sp.N(R2_star_val, 30)
 
-# print(f'R_1_star: {R_2_star_num}')
+print(f'R_2_star_num: {R_2_star_num}')
 # print(f"min_val_R_2_num: {min_val_R_2_num}")
 # print(f"max_val_R_2_num: {max_val_R_2_num}")
 
@@ -188,100 +187,150 @@ y_im1_sym = sp.simplify(f_expr.subs(x_sym, x_im1))
 y_i_sym   = sp.simplify(f_expr.subs(x_sym, x_i))
 y_ip1_sym = sp.simplify(f_expr.subs(x_sym, x_ip1))
 
-# 0-й порядок (таблица)
 y0 = y_im1_sym
 y1 = y_i_sym
 y2 = y_ip1_sym
 
-# 1-я разделённая разность
 f01 = sp.simplify((y1 - y0) / (x_i - x_im1))   # f[x0,x1]
 f12 = sp.simplify((y2 - y1) / (x_ip1 - x_i))   # f[x1,x2]
 
 
 
-# 2-я разделённая разность
 f012 = sp.simplify((f12 - f01) / (x_ip1 - x_im1))  # f[x0,x1,x2]
+f012 = sp.N(f012, 30)
+f12 = sp.N(f12, 30)
+x_im1 = sp.N(x_im1, 30)
+x_ip1 = sp.N(x_ip1, 30)
+f01 = sp.N(f01, 30)
+y0 = sp.N(y0, 30)
+y1 = sp.N(y1, 30)
 
-# Печать "таблицы"
-print("\nТаблица разделённых разностей для узлов:")
+print("Таблица разделённых разностей для узлов:")
 print(f"x_{i-1} = {x_im1}, f = {y0}")
-print(f"x_{i}   = {x_i},   f = {y1}")
+print(f"x_{i} = {x_i}, f = {y1}")
 print(f"x_{i+1} = {x_ip1}, f = {y2}")
 print(f"f[x0,x1] = {f01}")
 print(f"f[x1,x2] = {f12}")
 print(f"f[x0,x1,x2] = {f012}")
 
 
-# --- Многочлены Ньютона ---
+# Многочлены Ньютона
 x = x_sym
 
-# линейный (Newton first-order) на базе x0,x1 с коэффициентом f01
 N1 = sp.simplify(y0 + f01 * (x - x_im1))
-
-# квадратичный Newton (N2) на x0,x1,x2
 N2 = sp.simplify(y0 + f01 * (x - x_im1) + f012 * (x - x_im1) * (x - x_i))
 
-# значения в x_star
 N1_xstar_sym = sp.simplify(N1.subs(x_sym, x_star_sym))
 N2_xstar_sym = sp.simplify(N2.subs(x_sym, x_star_sym))
 
 N1_xstar_num = sp.N(N1_xstar_sym, 30)
 N2_xstar_num = sp.N(N2_xstar_sym, 30)
 
-print("\nМногочлены Ньютона:")
-print(f"N1(x) (симв.): {N1}")
-print(f"N2(x) (симв.): {N2}")
-print(f"N1(x*): {N1_xstar_sym}  (числ.: {N1_xstar_num})")
-print(f"N2(x*): {N2_xstar_sym}  (числ.: {N2_xstar_num})")
+print("Многочлены Ньютона:")
+# print(f"N1(x) (симв.): {N1}")
+# print(f"N2(x) (симв.): {N2}")
+print(f"N1(x*): {N1_xstar_sym} ")
+print(f"N2(x*): {N2_xstar_sym} ")
 
-# Сравнение с Lagrange (L1, L2) — L1 и L2 у тебя есть
-# 1) символьная разность (должна быть 0)
-diff_N1_L1 = sp.simplify(N1.subs(x_sym, x_star_sym) - L1)   # если L1 — значение в x*, использовать L1 directly
-# Если L1 у тебя — символьное значение именно в x_star, то оставь как есть.
-# Чтобы быть надежным, рассматриваем L1_sym и L2_sym как симв. формы. Если L1/ L2 — численные значения, сравниваем численно:
-try:
-    L1_sym = L1  # у тебя L1 — уже символьное значение в x*
-    L2_sym = L2  # L2 — символьный (значение в x*)
-except Exception:
-    L1_sym = sp.simplify(y0 + f01 * (x_star_sym - x_im1))  # fallback
-    L2_sym = sp.simplify(N2_xstar_sym)
 
-# Для надёжности: сравним численно N1(x*), N2(x*) с L1 и L2
+
 N1_vs_L1_diff = float(sp.N(N1_xstar_sym - L1, 30))
 N2_vs_L2_diff = float(sp.N(N2_xstar_sym - L2, 30))
 
-print("\nСравнение Newton <-> Lagrange в точке x*:")
-print(f"N1(x*) - L1(x*): {sp.simplify(N1_xstar_sym - L1)}  (числ: {N1_vs_L1_diff})")
-print(f"N2(x*) - L2(x*): {sp.simplify(N2_xstar_sym - L2)}  (числ: {N2_vs_L2_diff})")
+print("Сравнение Ньютона и Лангранджа в точке x*:")
+print(f"N1(x*) - L1(x*):  {N1_vs_L1_diff})")
+print(f"N2(x*) - L2(x*): {N2_vs_L2_diff})")
 
-# Если хочешь, проверим символьное тождество на полиномах (всей формуле, а не только в точке):
-sym_diff_N2_L2_full = sp.simplify(N2 - sp.simplify(
-    # build Lagrange polynomial symbolically from nodes for 'x' to compare
-    y0 * (x - x_i) * (x - x_ip1) / ((x_im1 - x_i) * (x_im1 - x_ip1)) +
-    y1 * (x - x_im1) * (x - x_ip1) / ((x_i - x_im1) * (x_i - x_ip1)) +
-    y2 * (x - x_im1) * (x - x_i) / ((x_ip1 - x_im1) * (x_ip1 - x_i))
-))
-print("\nСимвольная разность N2 - Lagrange_polynomial (должно быть 0):")
-print(sym_diff_N2_L2_full)
 
-# краткий итог в читабельном виде
-print("\nИтоги (численно, 30 значащих):")
-print(f"N1(x*): {N1_xstar_num}")
-print(f"L1(x*): {sp.N(L1,30)}")
-print(f"разность N1-L1: {N1_vs_L1_diff}")
 
-print(f"N2(x*): {N2_xstar_num}")
-print(f"L2(x*): {sp.N(L2,30)}")
-print(f"разность N2-L2: {N2_vs_L2_diff}")
+# # краткий итог в читабельном виде
+# print("\nИтоги (численно, 30 значащих):")
+# print(f"N1(x*): {N1_xstar_num}")
+# print(f"L1(x*): {sp.N(L1,30)}")
+# print(f"разность N1-L1: {N1_vs_L1_diff}")
+#
+# print(f"N2(x*): {N2_xstar_num}")
+# print(f"L2(x*): {sp.N(L2,30)}")
+# print(f"разность N2-L2: {N2_vs_L2_diff}")
+#
+
+
+
+
+
+
+
+
 # ------------------------
 # Графики
 # ------------------------
+L1_poly = sp.simplify(
+    y_i_sym * (x_sym - x_ip1) / (x_i - x_ip1) +
+    y_i1_sym * (x_sym - x_i) / (x_ip1 - x_i)
+)
+
+L2_poly = sp.simplify(
+    y_im1_sym * (x_sym - x_i) * (x_sym - x_ip1) / ((x_im1 - x_i) * (x_im1 - x_ip1)) +
+    y_i_sym   * (x_sym - x_im1) * (x_sym - x_ip1) / ((x_i - x_im1) * (x_i - x_ip1)) +
+    y_ip1_sym * (x_sym - x_im1) * (x_sym - x_i) / ((x_ip1 - x_im1) * (x_ip1 - x_i))
+)
+
+L1_plot = sp.lambdify(x_sym, L1_poly, 'numpy')
+L2_plot = sp.lambdify(x_sym, L2_poly, 'numpy')
+
+N1_plot = sp.lambdify(x_sym, N1, 'numpy')
+N2_plot = sp.lambdify(x_sym, N2, 'numpy')
+
+# 1. Функция
+plt.figure()
 plt.plot(x_fit, y_fit, color="red", label="f(x)")
 plt.plot(x_points, y_points, "o", color="blue", label="табличные точки")
 plt.axvline(x_star_num, color="gray", linestyle="--", alpha=0.5)
-plt.xlabel('Ось х')
-plt.ylabel('Ось y')
-plt.title('График функции и интерполяции')
+plt.title('Функция и табличные точки')
 plt.legend()
 plt.grid()
+
+
+
+# # 2. Лагранж L1
+# plt.figure()
+# plt.plot(x_fit, L1_plot(x_fit), label="Лагранж L1", linestyle="--")
+# plt.title('Интерполяция Лагранжа L1')
+# plt.legend()
+# plt.grid()
+
+
+# 3. Лагранж L2
+plt.figure()
+plt.plot(x_fit, L2_plot(x_fit), label="Лагранж L2", linestyle="-.")
+plt.title('Интерполяция Лагранжа L2')
+plt.legend()
+plt.grid()
+
+
+# # 4. Ньютон N1
+# plt.figure()
+# plt.plot(x_fit, N1_plot(x_fit), label="Ньютон N1", linestyle="--", alpha=0.7)
+# plt.title('Интерполяция Ньютона N1')
+# plt.legend()
+# plt.grid()
+
+
+# 5. Ньютон N2
+plt.figure()
+plt.plot(x_fit, N2_plot(x_fit), label="Ньютон N2", linestyle="-.", alpha=0.7)
+plt.title('Интерполяция Ньютона N2')
+plt.legend()
+plt.grid()
+
+#6
+#
+# x_big = np.linspace(0, 3, 500)  # от 0.1, чтобы избежать log(0)
+# plt.figure()
+# plt.plot(x_big, f(x_big), color="red", label="f(x) = x^2 + ln(x)")
+# plt.title("Функция f(x) в большом масштабе")
+# plt.legend()
+# plt.grid()
+
+# показываем всё сразу
 plt.show()
