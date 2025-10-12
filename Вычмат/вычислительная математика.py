@@ -5,19 +5,26 @@ from sympy.codegen.rewriting import optimize
 from scipy import optimize
 from table import table
 
-i = 0
+SELECTED_ROW = 0
 
+
+a = float(table[SELECTED_ROW]['a'])
+b = float(table[SELECTED_ROW]['b'])
+x_star = float(table[SELECTED_ROW]['x_star'])
+f_expr = table[SELECTED_ROW]['f_expr']
+
+print(f_expr)
 x_sym = sp.symbols('x')
+print(a)
+# a = 0.4
+# b = 0.9
+# x_star = 0.52
 
-a = 0.4
-b = 0.9
-x_star = 0.52
 count_points = 11
 
 # f_expr можно менять в одном месте
 # f_expr = x_sym**2 - sp.log(x_sym + 2, 10)
 # f_expr = x_sym**2 - sp.log(x_sym, 10)
-f_expr = x_sym**3 - sp.sin(x_sym)
 
 # ------------------------
 # Часть 1: определяем f
