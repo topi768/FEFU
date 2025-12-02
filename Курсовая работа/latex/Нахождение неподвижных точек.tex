@@ -1,0 +1,89 @@
+\documentclass[fleqn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\renewcommand{\arraystretch}{1.5}
+\renewcommand{\baselinestretch}{1.75}
+\usepackage[margin=3cm]{geometry}
+
+\usepackage{amssymb}
+\usepackage{caption}
+\setlength{\mathindent}{0pt}
+
+\begin{document}
+
+\title{ВЛИЯНИЕ РАВНОВЕСНОГО ПРОМЫСЛА НА СЦЕНАРИИ РАЗВИТИЯ ДВУХВОЗРАСТНОЙ ПОПУЛЯЦИИ ПРИ ПЛОТНОСТНОЙ РЕГУЛЯЦИИ РОЖДАЕМОСТИ}
+\author{Я}
+\maketitle
+
+\newpage
+
+\[
+\begin{cases}
+X_{n+1} = \alpha Y_n(1-\beta Y_n)(1-u_1) \\
+Y_{n+1} = (sX_n + vY_n)(1-u_2)
+\end{cases}
+\]
+
+Найду неподвижные точки. То есть $X_{n+1} = X_n = X$ и $Y_{n+1} = Y_n = Y$
+
+\[
+\begin{cases}
+X = \alpha Y(1-\beta Y)(1-u_1) \\
+Y = (sX_n + vY)(1-u_2)
+\end{cases}
+\]
+Подставляю X во второе уравнение \\
+$Y = (s \alpha Y (1-\beta Y) (1-u_1) + v Y) (1-u_2) \\$
+$ Y = ((s \alpha Y - s \alpha \beta Y^2)(1-u_1) + v Y)(1-u_2) | :Y( Y \neq 0) \\$
+$ 1 = ((s\alpha - s\alpha \beta Y)(1-u_1) + v)(1-u_2)  \\$
+$ 1 = (s \alpha - s\alpha\beta Y - s\alpha u_1 + s \alpha \beta u_1 Y + v)(1-u_2) \\$
+$ 1 = s \alpha - s \alpha\beta Y -s \alpha u_1 + s \alpha \beta u_1Y + v
+ - s \alpha u_2 + s \alpha \beta u_2 Y + s \alpha \beta u_1 u_2- s \alpha u_1 u_2 Y - v u_2 \\$
+$ Y = \dfrac{-1 + s \alpha  - s \alpha u_1 + v -s \alpha u_2 + s \alpha u_1 u_2 - v u_2}{s \alpha \beta - s \alpha \beta u_1 - s \alpha \beta u_2 + s \alpha \beta u_1 u_2} \\$
+$ Y = \dfrac{s \alpha (1-u_1)(1-u_2) + v(1-u_2)-1}{s \alpha \beta (1-u_1)(1-u_2)}\\ $
+Пусть числитель Y будет равен N, а знаменатель D. Тогда $ Y = \dfrac{N}{D} \\$
+$ N = s \alpha (1-u_1)(1-u_2) + v(1-u_2)-1 \\$
+$ D = s \alpha \beta (1-u_1)(1-u_2) \\$
+После подстановки и сокращения получаю
+$  X = \dfrac{N(1 - v(1 - u_2))}{s^2 \alpha \beta (1 - u_1)(1 - u_2)^2} \\$
+% $$ J = \begin{pmatrix} 
+%     X'_x & X'_y \\ 
+%     Y'_x & Y'_y
+%  \end{pmatrix} \\$$
+
+
+
+ Возьму изначальные равенства. Без n так как я пока что рассматриваю неподвижные точки, не зависящие от времени \\
+$ F_1(X,Y) = \alpha Y_n(1-\beta Y_n)(1-u_1) \\ $
+$ F_1(X,Y) = \alpha (Y_n-\beta Y_n^2)(1-u_1) \\ $
+$ F_2(X,Y) = (sX_n + vY_n)(1-u_2) $
+Построю матрицу Якоби или же мтрицу возмущений:
+ $$ J = \begin{pmatrix} 
+    F'_{1X} & F'_{1Y} \\ 
+    F'_{2X} & F'_{2Y}
+ \end{pmatrix}
+  = \begin{pmatrix} 
+    0 & \alpha(1-u_1)(1-2\beta Y) \\ 
+    s(1-u_1) & v(1-u_2)
+ \end{pmatrix} \overset{\text{Переобозначил}}{=} 
+ \begin{pmatrix} 
+    0 & b \\ 
+    c & d
+ \end{pmatrix}
+ \\$$
+
+ И при этом собственные числа это мультипликаторы отображения $\lambda_1$ и $ \lambda_2$, для которых справедливо: $ \lambda^2 - trJ \lambda + |J| = 0 $ \\
+ $ p = trJ = d  $ (след)\\
+ $ q = |J| = -bc $\\
+ Характеристическое уравнение: $ \lambda^2 - p \lambda + q = 0 $\\
+ Характеристическое уравнение: $ \lambda^2 - d \lambda - bc = 0 $\\
+ $ D = d^2 + 4bc $
+ Теперь построю треугольник устойчивости, краями которого есть 3 прямые: \\
+   1) $ q = 1 - p (\lambda = 1)$ - \textbf{касательная бифуркация (fold)}\\
+   2) $ q = 1 - p (\lambda = -1)$ - \textbf{бифуркация удвоения периода (flip)}\\
+   3) $ q = 1 $ ($\lambda$ - комплексное(?)) - \textbf{бифуркация Неймарка–Сакера} \\
+Решение будет устойчиво при всех  $|\lambda| < 1$, то есть устойчивые решения находятся внутри этого треугольника
+\end{document}
