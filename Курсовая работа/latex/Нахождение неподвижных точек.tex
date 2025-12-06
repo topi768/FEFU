@@ -12,13 +12,21 @@
 \usepackage{caption}
 \setlength{\mathindent}{0pt}
 
+\usepackage{titlesec} % уменьшение отступа над главами
+\titlespacing*{\section}{0pt}{0pt}{1em}  % уменьшение отступа над главами 
+
+
+
 \begin{document}
 
-\title{ВЛИЯНИЕ РАВНОВЕСНОГО ПРОМЫСЛА НА СЦЕНАРИИ РАЗВИТИЯ ДВУХВОЗРАСТНОЙ ПОПУЛЯЦИИ ПРИ ПЛОТНОСТНОЙ РЕГУЛЯЦИИ РОЖДАЕМОСТИ}
+\title{ВЛИЯНИЕ ПРОМЫСЛА НА СЦЕНАРИИ РАЗВИТИЯ ДВУХВОЗРАСТНОЙ ПОПУЛЯЦИИ ПРИ ПЛОТНОСТНОЙ РЕГУЛЯЦИИ РОЖДАЕМОСТИ}
 \author{Я}
 \maketitle
 
+\tableofcontents
 \newpage
+
+\section{Постановка модели}
 
 \[
 \begin{cases}
@@ -26,9 +34,7 @@ X_{n+1} = \alpha Y_n(1-\beta Y_n)(1-u_1) \\
 Y_{n+1} = (sX_n + vY_n)(1-u_2)
 \end{cases}
 \]
-
 Найду неподвижные точки. То есть $X_{n+1} = X_n = X$ и $Y_{n+1} = Y_n = Y$
-
 \[
 \begin{cases}
 X = \alpha Y(1-\beta Y)(1-u_1) \\
@@ -40,34 +46,35 @@ $Y = (s \alpha Y (1-\beta Y) (1-u_1) + v Y) (1-u_2) \\$
 $ Y = ((s \alpha Y - s \alpha \beta Y^2)(1-u_1) + v Y)(1-u_2) | :Y( Y \neq 0) \\$
 $ 1 = ((s\alpha - s\alpha \beta Y)(1-u_1) + v)(1-u_2)  \\$
 $ 1 = (s \alpha - s\alpha\beta Y - s\alpha u_1 + s \alpha \beta u_1 Y + v)(1-u_2) \\$
-$ 1 = s \alpha - s \alpha\beta Y -s \alpha u_1 + s \alpha \beta u_1Y + v
- - s \alpha u_2 + s \alpha \beta u_2 Y + s \alpha \beta u_1 u_2- s \alpha u_1 u_2 Y - v u_2 \\$
+$1 = s\alpha - s\alpha\beta Y - s\alpha u_1 + s\alpha\beta u_1 Y + v 
+    - s\alpha u_2 + s\alpha\beta u_2 Y + s\alpha\beta u_1 u_2 
+    - s\alpha u_1 u_2 Y - v u_2 \\$
 $ Y = \dfrac{-1 + s \alpha  - s \alpha u_1 + v -s \alpha u_2 + s \alpha u_1 u_2 - v u_2}{s \alpha \beta - s \alpha \beta u_1 - s \alpha \beta u_2 + s \alpha \beta u_1 u_2} \\$
-$ Y = \dfrac{s \alpha (1-u_1)(1-u_2) + v(1-u_2)-1}{s \alpha \beta (1-u_1)(1-u_2)}\\ $
-Пусть числитель Y будет равен N, а знаменатель D. Тогда $ Y = \dfrac{N}{D} \\$
-$ N = s \alpha (1-u_1)(1-u_2) + v(1-u_2)-1 \\$
-$ D = s \alpha \beta (1-u_1)(1-u_2) \\$
-После подстановки и сокращения получаю
-$  X = \dfrac{N(1 - v(1 - u_2))}{s^2 \alpha \beta (1 - u_1)(1 - u_2)^2} \\$
-% $$ J = \begin{pmatrix} 
-%     X'_x & X'_y \\ 
-%     Y'_x & Y'_y
-%  \end{pmatrix} \\$$
+$ Y = \dfrac{s \alpha (1-u_1)(1-u_2) + v(1-u_2)-1}{s \alpha \beta (1-u_1)(1-u_2)} $ \\
+\\
+$Y = \dfrac{s \alpha (1-u_1)(1-u_2) + v(1-u_2)-1}{s \alpha \beta (1-u_1)(1-u_2)}$ \\ 
+$X = \dfrac{\big(s\alpha(1-u_1)(1-u_2) + v(1-u_2) - 1\big)\big(1 - v(1-u_2)\big)} {s^2\alpha\beta(1-u_1)(1-u_2)^2} $ \\
+Теперь выполню переход к новой системе координат: $ y = \beta Y; x = s \beta X; \tilde{\alpha} = \alpha s$. Получаю: \\
+$ y = 1 + \dfrac{v(1-u_2) - 1}{ \tilde{\alpha}(1-u_1)(1-u_2)} $ \\
+$ x = \dfrac{y(1-v(1-u_2))}{1-u_2} $ \\
+В силу условие Ферхюста, накладываются ограничения на y: $ 0 \leq y\leq  1 $.\\
+После перехода получил из 6 параметров 4. \\
+\\
 
-
+\section{Анализ устойчивости}
 
  Возьму изначальные равенства. Без n так как я пока что рассматриваю неподвижные точки, не зависящие от времени \\
 $ F_1(X,Y) = \alpha Y_n(1-\beta Y_n)(1-u_1) \\ $
 $ F_1(X,Y) = \alpha (Y_n-\beta Y_n^2)(1-u_1) \\ $
-$ F_2(X,Y) = (sX_n + vY_n)(1-u_2) $
-Построю матрицу Якоби или же мтрицу возмущений:
+$ F_2(X,Y) = (sX_n + vY_n)(1-u_2) $ \\
+Построю матрицу Якоби или же матрицу возмущений:
  $$ J = \begin{pmatrix} 
     F'_{1X} & F'_{1Y} \\ 
     F'_{2X} & F'_{2Y}
  \end{pmatrix}
   = \begin{pmatrix} 
-    0 & \alpha(1-u_1)(1-2\beta Y) \\ 
-    s(1-u_1) & v(1-u_2)
+    0 & \alpha(1-u_1)(1-2\beta Y_n) \\ 
+    s(1-u_2) & v(1-u_2)
  \end{pmatrix} \overset{\text{Переобозначил}}{=} 
  \begin{pmatrix} 
     0 & b \\ 
@@ -82,8 +89,19 @@ $ F_2(X,Y) = (sX_n + vY_n)(1-u_2) $
  Характеристическое уравнение: $ \lambda^2 - d \lambda - bc = 0 $\\
  $ D = d^2 + 4bc $
  Теперь построю треугольник устойчивости, краями которого есть 3 прямые: \\
-   1) $ q = 1 - p (\lambda = 1)$ - \textbf{касательная бифуркация (fold)}\\
-   2) $ q = 1 - p (\lambda = -1)$ - \textbf{бифуркация удвоения периода (flip)}\\
-   3) $ q = 1 $ ($\lambda$ - комплексное(?)) - \textbf{бифуркация Неймарка–Сакера} \\
-Решение будет устойчиво при всех  $|\lambda| < 1$, то есть устойчивые решения находятся внутри этого треугольника
+   1) $ q = p - 1 \quad (\lambda = 1)$ - \textbf{транскритическая бифуркация}\\
+   2) $ q = -1 - p \quad (\lambda = -1)$ - \textbf{бифуркация удвоения периода (flip)}\\
+   3) $ q = 1 \quad $ ($\lambda$ - комплексное) - \textbf{бифуркация Неймарка–Сакера} \\
+Решение будет устойчиво при всех  $|\lambda| < 1$, то есть устойчивые решения находятся внутри этого треугольника \\
+\\
+$\tilde{\alpha} = s \alpha$ --- сочетание рождаемости и коэффициента перехода между возрастами.\\
+$0 \leq v \leq 1$ --- выживаемость взрослых.\\
+$0 \leq u_1 \leq 1$ --- доля вылова малых рыб.\\
+$0 \leq u_2 \leq 1$ --- доля вылова взрослых рыб.\\
+1. Рассмотрю прямую $q = p - 1$ \\
+$ - \alpha(1-u_2) \alpha (1-u_1) (1-2\beta Y_n)  = v(1-u_2)- 1$ \\
+$ - \tilde{\alpha} (1-u_2)(1-u_1)(1-2y) = v(1-u_2) - 1$ \\
+Теперь зафиксирую 
+
+
 \end{document}
