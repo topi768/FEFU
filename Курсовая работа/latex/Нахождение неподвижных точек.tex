@@ -8,6 +8,7 @@
 \renewcommand{\baselinestretch}{1.75}
 \usepackage[margin=3cm]{geometry}
 
+
 \usepackage{amssymb}
 \usepackage{caption}
 \setlength{\mathindent}{0pt}
@@ -71,9 +72,13 @@ $ F_2(X,Y) = (sX_n + vY_n)(1-u_2) $ \\
  $$ J = \begin{pmatrix} 
     F'_{1X} & F'_{1Y} \\ 
     F'_{2X} & F'_{2Y}
- \end{pmatrix}
-  = \begin{pmatrix} 
+ \end{pmatrix} = 
+ \begin{pmatrix} 
     0 & \alpha(1-u_1)(1-2\beta Y_n) \\ 
+    s(1-u_2) & v(1-u_2)
+ \end{pmatrix} =
+ \begin{pmatrix} 
+    0 & \alpha(1-u_1)(1-2y) \\ 
     s(1-u_2) & v(1-u_2)
  \end{pmatrix} \overset{\text{Переобозначил}}{=} 
  \begin{pmatrix} 
@@ -87,9 +92,8 @@ $ F_2(X,Y) = (sX_n + vY_n)(1-u_2) $ \\
  $ q = |J| = -bc $\\
  Характеристическое уравнение: $ \lambda^2 - p \lambda + q = 0 $\\
  Характеристическое уравнение: $ \lambda^2 - d \lambda - bc = 0 $\\
- $ D = d^2 + 4bc $
- Теперь построю треугольник устойчивости, краями которого есть 3 прямые: \\
-   1) $ q = p - 1 \quad (\lambda = 1)$ - \textbf{транскритическая бифуркация}\\
+ Теперь построю треугольник устойчивости, краями которого есть 3 прямые, соотвествующие бифуркации коразмерности один: \\
+   1) $ q = p - 1 \quad (\lambda = 1)$ - \textbf{транскритическая бифуркация} \\
    2) $ q = -1 - p \quad (\lambda = -1)$ - \textbf{бифуркация удвоения периода (flip)}\\
    3) $ q = 1 \quad $ ($\lambda$ - комплексное) - \textbf{бифуркация Неймарка–Сакера} \\
 Решение будет устойчиво при всех  $|\lambda| < 1$, то есть устойчивые решения находятся внутри этого треугольника \\
@@ -98,10 +102,91 @@ $\tilde{\alpha} = s \alpha$ --- сочетание рождаемости и к�
 $0 \leq v \leq 1$ --- выживаемость взрослых.\\
 $0 \leq u_1 \leq 1$ --- доля вылова малых рыб.\\
 $0 \leq u_2 \leq 1$ --- доля вылова взрослых рыб.\\
-1. Рассмотрю прямую $q = p - 1$ \\
-$ - \alpha(1-u_2) \alpha (1-u_1) (1-2\beta Y_n)  = v(1-u_2)- 1$ \\
-$ - \tilde{\alpha} (1-u_2)(1-u_1)(1-2y) = v(1-u_2) - 1$ \\
-Теперь зафиксирую 
+
+Также у этого треугольника есть вершины, называемые бифуркациями коразмерности два \\
+1) \textit{резонанс} 1: 1, $R_1$, когда $\lambda_1 = \lambda_2 = + 1: S=2, J= 1$ \\
+2) \textit{резонанс} 1: 2, $R_2$, когда $\lambda_1 = \lambda_2 = - 1: S=-2, J= 1$ \\
+3) \textit{бифуркация fold–flip, ff},  когда $\lambda_1 = + 1$ и $\lambda_2 = - 1: S=0, J= - 1$ \\
+
+
+\begin{figure}
+    \centering % Центрирование рисунка
+    \includegraphics[width=0.8\textwidth]{треугольник устойчивости.png}
+   %  \caption{Это подпись к рисунку.}
+    \label{fig:my_figure}
+\end{figure}
+ 1. Рассмотрю точку $R_1$ \\
+$
+\begin{cases}
+trJ = 2\\
+|J| = 1
+\end{cases}
+$
+\[
+\begin{cases}
+v(1-u_2) = 2\\
+|J| = 1 \quad  (\text{Не стал подставлять})
+\end{cases}
+\]
+$v(1-u_2) = 2$ - не имеет биологического смысла из за ограничений $ 0<v<1; 0<u_2<1 $ \\
+\\
+ 2. Рассмотрю точку $R_2$ \\
+ $
+ \begin{cases}
+trJ = -2\\
+|J| = 1
+\end{cases}
+ $
+ \\
+ $
+ \begin{cases}
+v(1-u_2) = -2\\
+|J| = 1
+\end{cases}
+ $
+ \\
+$v(1-u_2) = -2$ - также не имеет биологического смысла из за ограничений $ 0<v<1; 0<u_2<1 $ \\
+\\
+ 3. Рассмотрю точку $\textit{ff}$ \\
+ $
+ \begin{cases}
+trJ = 0\\
+|J| = -1
+\end{cases}
+ $
+ $
+ \begin{cases}
+v(1-u_2) = 0\\
+-(1-u_1)(1-2y)\tilde{\alpha}(1-u_2) = -1
+\end{cases}
+ $
+  $
+ \begin{cases}
+v(1-u_2) = 0\\
+(1-u_1)(1-2y)\tilde{\alpha}(1-u_2) = 1
+\end{cases}
+ $\\
+ Рассмотрю 2 случая из 1го равенства: \\
+ 3.1.  $1-u_2$ = 0; $u_2$ = 1 \\
+Подставляю под второе равнество и получаю 0 = 1 - невозможно \\
+ 3.2. v = 0\\
+ $ y = 1 + \dfrac{v(1-u_2) - 1}{ \tilde{\alpha}(1-u_1)(1-u_2)} $ - Подставляю v = 0\\
+ $ y = 1 - \dfrac{1}{ \tilde{\alpha}(1-u_1)(1-u_2)} $ \\
+ $ (1-u_1)(1-2+\dfrac{2}{ \tilde{\alpha} (1-u_1)(1-u_2)}) \tilde{\alpha} (1-u_2) = 1 $ \\
+ $ -\tilde{\alpha}(1-u_1) (1-u_2) + 2 = 1$ \\
+ $ \tilde{\alpha}(1-u_1)(1-u_2) = 1 $ \\
+
+\begin{figure}
+    \centering % Центрирование рисунка
+    \includegraphics[width=0.8\textwidth]{ff_point.png}
+   %  \caption{Это подпись к рисунку.}
+    \label{fig:my_figure}
+\end{figure}
+
+ Нужно также проверить под условие Ферхюста:  $ 0 \leq y\leq  1 $ \\
+$ 0 \leq 1- \dfrac{1}{ \tilde{\alpha}(1-u_1)(1-u_2) } \leq  1 $ \\
+$ 0 \leq 1- \dfrac{1}{ 1  } \leq  1 $ \\
+$ 0 \leq  0 \leq  1 $ - условие Ферхюста выполнено \\
 
 
 \end{document}
