@@ -56,11 +56,38 @@ $ Y = \dfrac{s \alpha (1-u_1)(1-u_2) + v(1-u_2)-1}{s \alpha \beta (1-u_1)(1-u_2)
 $Y = \dfrac{s \alpha (1-u_1)(1-u_2) + v(1-u_2)-1}{s \alpha \beta (1-u_1)(1-u_2)}$ \\ 
 $X = \dfrac{\big(s\alpha(1-u_1)(1-u_2) + v(1-u_2) - 1\big)\big(1 - v(1-u_2)\big)} {s^2\alpha\beta(1-u_1)(1-u_2)^2} $ \\
 Теперь выполню переход к новой системе координат: $ y = \beta Y; x = s \beta X; \tilde{\alpha} = \alpha s$. Получаю: \\
-$ y = 1 + \dfrac{v(1-u_2) - 1}{ \tilde{\alpha}(1-u_1)(1-u_2)} $ \\
-$ x = \dfrac{y(1-v(1-u_2))}{1-u_2} $ \\
-В силу условие Ферхюста, накладываются ограничения на y: $ 0 \leq y\leq  1 $.\\
+\[
+\boxed{
+\begin{aligned}
+y &= 1 + \dfrac{v(1-u_2) - 1}{\tilde{\alpha}(1-u_1)(1-u_2)} \\
+x &= \dfrac{y(1 - v(1-u_2))}{1-u_2}
+\end{aligned}
+}
+\quad \text{ - координаты неподпижной точки}
+\]
+
+\underline{Замеч.}  В силу условие Ферхюста, накладываются ограничения на y: $ 0 \leq y\leq  1 $.\\
 После перехода получил из 6 параметров 4. \\
-\\
+Также стоит переевсти изначальную систему в новые переменные. $ Y_n = \dfrac{y_n}{\beta} $, $ X_n = \dfrac{x_n}{s \beta} $ \\
+\[
+\begin{cases}
+X_{n+1} = \frac{\alpha y_n}{\beta} (1- y_n)(1-u_1) \\
+Y_{n+1} = (\frac{x_n}{\beta} + \frac{vy}{beta})(1-u_2)
+\end{cases}
+\]
+
+\[
+\boxed{
+\begin{aligned}
+\begin{cases}
+x_{n+1} =\tilde{\alpha}y_n (1- y_n)(1-u_1) \\
+y_{n+1} = (x_n + vy_n)(1-u_2)
+\end{cases}
+\end{aligned}
+}
+\quad \text{ - изначальная система в новых коодринатах}
+\]
+
 
 \section{Анализ устойчивости}
 
@@ -176,17 +203,17 @@ v(1-u_2) = 0\\
  $ -\tilde{\alpha}(1-u_1) (1-u_2) + 2 = 1$ \\
  $ \tilde{\alpha}(1-u_1)(1-u_2) = 1 $ \\
 
+
+
+ Нужно также проверить под условие Ферхюста:  $ 0 \leq y\leq  1 $ \\
+$ 0 \leq 1- \dfrac{1}{ \tilde{\alpha}(1-u_1)(1-u_2) } \leq  1 $ \\
+$ 0 \leq 1- \dfrac{1}{ 1  } \leq  1 $ \\
+$ 0 \leq  0 \leq  1 $ - условие Ферхюста выполнено \\
 \begin{figure}
     \centering % Центрирование рисунка
     \includegraphics[width=0.8\textwidth]{ff_point.png}
    %  \caption{Это подпись к рисунку.}
     \label{fig:my_figure}
 \end{figure}
-
- Нужно также проверить под условие Ферхюста:  $ 0 \leq y\leq  1 $ \\
-$ 0 \leq 1- \dfrac{1}{ \tilde{\alpha}(1-u_1)(1-u_2) } \leq  1 $ \\
-$ 0 \leq 1- \dfrac{1}{ 1  } \leq  1 $ \\
-$ 0 \leq  0 \leq  1 $ - условие Ферхюста выполнено \\
-
 
 \end{document}
