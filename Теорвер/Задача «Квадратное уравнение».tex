@@ -1,0 +1,41 @@
+\documentclass[fleqn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\renewcommand{\arraystretch}{1.5}
+\renewcommand{\baselinestretch}{1.75}
+\usepackage[margin=3cm]{geometry}
+\usepackage{graphicx} % основной пакет для работы с графикой
+
+\usepackage{amssymb}
+\usepackage{caption}
+\setlength{\mathindent}{0pt}
+
+\begin{document}
+
+\title{Задачка}
+\author{Цуканников Кирилл Андреевич}
+\maketitle
+
+\newpage
+Числа p и qслучайно выбраны на отрезках: $p \in [2, 6], q \in [0, 4] $ Найти вероятность того, что корни уравнения $x^2 + px + q = 0 $ действительными и различными. \\
+Решение: \\
+$ D = p^2 - 4q > 0 $ (2 корня строго) \\
+$ q < \frac{p^2}{4} $ \\
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{2.png}
+    \caption{ось обцисс - p, ординат - q}
+    \label{fig:my_image}
+\end{figure}
+
+Площадь прямоугольника  $p \in [2, 6], q \in [0, 4] $ будет равно 16 \\
+Найду площадь $ q < \frac{p^2}{4} $в этом прямоугольнике. Эту площадь найду как сумму прямоугольника с площадью 2 * 4 = 8 и фигуры под $q = \frac{p^2}{4}$ \\
+$\int\limits^4_2 \frac{p^2}{4} dp  = \frac{14}{3}$
+$S = \frac{14}{3} + 8 = \frac{38}{3}$(площадь под условием $ q < \frac{p^2}{4} $) \\
+Теперь поделю площадь удовлетворяющую условию га плозадь общую прямоугольника. То есть вопсопльзуюсь геомтерическим определением вероятности \\
+$ \frac{\frac{38}{3}}{16} = \frac{19}{24} $ - ответ.
+\end{document}

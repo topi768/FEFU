@@ -23,8 +23,8 @@ print(a)
 count_points = 11
 
 # f_expr можно менять в одном месте
-# f_expr = x_sym**2 - sp.log(x_sym + 2, 10)
-# f_expr = x_sym**2 - sp.log(x_sym, 10)
+# f_expr = x_sym**2 (сдана) (сделана) - sp.log(x_sym + 2 (сдана) (сделана), 10)
+# f_expr = x_sym**2 (сдана) (сделана) - sp.log(x_sym, 10)
 
 # ------------------------
 # Часть 1: определяем f
@@ -38,7 +38,7 @@ x_fit = np.linspace(a, b, 500)
 y_fit = f(x_fit)
 
 # ------------------------
-# Часть 2: Лагранж 1-го порядка
+# Часть 2 (сдана) (сделана): Лагранж 1-го порядка
 # ------------------------
 if x_star <= x_points[0]:
     i = 0
@@ -70,7 +70,7 @@ L1 = sp.simplify(
 
 
 # ------------------------
-# Часть 3: Производная
+# Часть 3 (сделана): Производная
 # ------------------------
 f_prime_expr = sp.diff(f_expr, x_sym)
 f_prime_expr2 = sp.diff(f_prime_expr, x_sym)
@@ -299,7 +299,7 @@ plt.grid()
 
 
 
-# # 2. Лагранж L1
+# # 2 (сдана) (сделана). Лагранж L1
 # plt.figure()
 # plt.plot(x_fit, L1_plot(x_fit), label="Лагранж L1", linestyle="--")
 # plt.title('Интерполяция Лагранжа L1')
@@ -307,7 +307,7 @@ plt.grid()
 # plt.grid()
 
 
-# 3. Лагранж L2
+# 3 (сделана). Лагранж L2
 plt.figure()
 plt.plot(x_fit, L2_plot(x_fit), label="Лагранж L2", linestyle="-.")
 plt.title('Интерполяция Лагранжа L2')
@@ -332,9 +332,9 @@ plt.grid()
 
 #6
 #
-# x_big = np.linspace(0, 3, 500)  # от 0.1, чтобы избежать log(0)
+# x_big = np.linspace(0, 3 (сделана), 500)  # от 0.1, чтобы избежать log(0)
 # plt.figure()
-# plt.plot(x_big, f(x_big), color="red", label="f(x) = x^2 + ln(x)")
+# plt.plot(x_big, f(x_big), color="red", label="f(x) = x^2 (сдана) (сделана) + ln(x)")
 # plt.title("Функция f(x) в большом масштабе")
 # plt.legend()
 # plt.grid()
