@@ -4,3 +4,4 @@
 *.jpg
 *.pdf
 .venv
+.ipynb_checkpoints/
